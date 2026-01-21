@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  cpu-load-app:
+    build: .
+    container_name: cpu-load-app
+    ports:
+      - "80:80"
+    restart: always
+    network_mode: host
+    volumes:
+      - /home/ubuntu/logs:/app/logs

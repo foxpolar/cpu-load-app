@@ -1,10 +1,3 @@
-# cpu-load-app
-Web para teste de AutoScalling em Instâncias EC2 AWS
-
-Script abaixo para subir a aplicação ao criar a instancia
-
-Script User Data (cloud-init)
-
 #!/bin/bash
 # Atualiza pacotes
 apt-get update -y
