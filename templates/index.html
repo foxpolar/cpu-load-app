@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CPU Load Test</title>
+    <style>
+        body { font-family: Arial; text-align: center; margin-top: 50px; }
+        table { margin: auto; border-collapse: collapse; }
+        td, th { padding: 10px; border: 1px solid #ccc; }
+        button { padding: 10px 20px; margin: 10px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <h1>Controle de Consumo de CPU</h1>
+    <form method="POST">
+        <button name="action" value="start">Iniciar Consumo CPU</button>
+        <button name="action" value="stop">Parar Consumo CPU</button>
+    </form>
+    <br>
+    <table>
+        <tr><th>Meta-Data</th><th>Value</th></tr>
+        <tr><td>InstanceId</td><td>{{ instance_id }}</td></tr>
+        <tr><td>Availability Zone</td><td>{{ az }}</td></tr>
+    </table>
+    <br>
+    <h2>Current CPU Load: {{ cpu_load }}%</h2>
+</body>
+</html>
