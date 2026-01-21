@@ -39,6 +39,8 @@ def index():
         elif action == "stop":
             cpu_stress.stop_cpu_load()
         return redirect("/")
+
+    instance_id, az = get_instance_metadata()
     cpu_load = psutil.cpu_percent(interval=1)
     return render_template("index.html", instance_id=instance_id, az=az, cpu_load=cpu_load)
 
