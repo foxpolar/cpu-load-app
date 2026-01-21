@@ -5,18 +5,6 @@ import psutil
 
 app = Flask(__name__)
 
-# Configuração de logging para arquivo
-log_file = "/home/ubuntu/logs/app.log"
-file_handler = logging.FileHandler(log_file)
-file_handler.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s %(levelname)s: %(message)s')
-file_handler.setFormatter(formatter)
-app.logger.addHandler(file_handler)
-app.logger.setLevel(logging.INFO)
-
-# Configuração StatsD (CloudWatch Agent escuta na porta 8125)
-statsd = StatsClient('localhost', 8125)
-
 def get_instance_metadata():
     try:
         instance_id = requests.get("http://169.254.169.254/latest/meta-data/instance-id", timeout=2).text
