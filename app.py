@@ -5,10 +5,27 @@ import psutil
 
 app = Flask(__name__)
 
+METADATA_BASE = "http://169.254.169.254/latest"
+
+def get_token():
+    return requests.put(
+        f"{METADATA_BASE}/api/token",
+        headers={"X-aws-ec2-metadata-token-ttl-seconds": "21600"},
+        timeout=2
+    ).text
+
+def get_metadata(path, token):
+    return requests.get(
+        f"{METADATA_BASE}/meta-data/{path}",
+        headers={"X-aws-ec2-metadata-token": token},
+        timeout=2
+    ).text
+
 def get_instance_metadata():
-    try:
-        instance_id = requests.get("http://169.254.169.254/latest/meta-data/instance-id", timeout=2).text
-        az = requests.get("http://169.254.169.254/latest/meta-data/placement/availability-zone", timeout=2).text
+    try:        
+        token = get_token()
+        instance_id = get_metadata("instance-id", token)
+        az = get_metadata("placement/availability-zone", token)
         return instance_id, az
     except:
         return "local-dev", "unknown"
@@ -22,8 +39,6 @@ def index():
         elif action == "stop":
             cpu_stress.stop_cpu_load()
         return redirect("/")
-
-    instance_id, az = get_instance_metadata()
     cpu_load = psutil.cpu_percent(interval=1)
     return render_template("index.html", instance_id=instance_id, az=az, cpu_load=cpu_load)
 
